@@ -1,3 +1,7 @@
 builddir
-lib
+lib/*
 .vscode
+CMakeFiles
+CMakeCache.txt
+*.cmake
+sound.wav

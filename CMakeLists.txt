@@ -1,14 +1,16 @@
-cmake_minimum_required (VERSION 2.8)
-project(ImprovTonnetz cpp)
-
-set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(BIN_DIR ${CMAKE_CURRENT_BIN_DIR})
-
-# In gcc, this will invoke the -I command
-include_directories(include)
-
+cmake_minimum_required (VERSION 3.1)
+project(ImprovTonnetz CXX)
 
 # compiler stuff
-add_executable(${PROJECT_NAME} src/main.cpp)
-target_link_libraries(${LIBS} m)
+add_executable(app src/main.cpp)
+
+# libraries
+add_subdirectory(lib/Cinder)
+
+# Includes
+target_include_directories(app PRIVATE include)
+
+# add executable with library
+target_link_libraries(app cinder)
+
 

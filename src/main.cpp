@@ -4,28 +4,13 @@
 #include "cinder/audio/audio.h"
 #include "cinder/CinderResources.h"
 #include "AudioDrawUtils.h"
+#include <iostream>
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class ImprovApp : public App {
-	public:
-		void setup() override;
-		void update();
-		void draw() override;
-		void keyDown(KeyEvent event);
-
-		audio::VoiceRef playback;
-};
-
-void ImprovApp::setup() {
-	audio::SourceFileRef sourceFile = audio::load(app::loadAsset("sound.wav"));
-	playback = audio::Voice::create(sourceFile);
-
-	playback->start();
+int main() {
+	cout<<"hello"<<endl;
+	return 0;
 }
-
-CINDER_APP( ImprovApp, RendererGl( RendererGl::Options().msaa( 8 ) ), []( App::Settings *settings ) {
-	settings->setMultiTouchEnabled( false );
-} )
