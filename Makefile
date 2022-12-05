@@ -117,37 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named app
+# Target rules for targets named ImprovTonnetz
 
 # Build rule for target.
-app: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 app
-.PHONY : app
+ImprovTonnetz: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ImprovTonnetz
+.PHONY : ImprovTonnetz
 
 # fast build rule for target.
-app/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/build
-.PHONY : app/fast
-
-#=============================================================================
-# Target rules for targets named cinder
-
-# Build rule for target.
-cinder: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cinder
-.PHONY : cinder
-
-# fast build rule for target.
-cinder/fast:
-	$(MAKE) $(MAKESILENT) -f lib/Cinder/CMakeFiles/cinder.dir/build.make lib/Cinder/CMakeFiles/cinder.dir/build
-.PHONY : cinder/fast
+ImprovTonnetz/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/build
+.PHONY : ImprovTonnetz/fast
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -155,7 +142,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -163,7 +150,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -174,8 +161,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... app"
-	@echo "... cinder"
+	@echo "... ImprovTonnetz"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

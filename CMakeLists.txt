@@ -1,16 +1,12 @@
 cmake_minimum_required (VERSION 3.1)
 project(ImprovTonnetz CXX)
 
-# compiler stuff
-add_executable(app src/main.cpp)
+get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/Cinder" ABSOLUTE)
 
-# libraries
-add_subdirectory(lib/Cinder)
+include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
-# Includes
-target_include_directories(app PRIVATE include)
-
-# add executable with library
-target_link_libraries(app cinder)
-
-
+ci_make_app(
+    CINDER_PATH ${CINDER_PATH}
+    SOURCES     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+    INCLUDES    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
