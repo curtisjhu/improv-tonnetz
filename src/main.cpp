@@ -14,6 +14,12 @@ void Improv::setup()
 	mGen->enable();
 	ctx->enable();
 
+	log::makeLogger<log::LoggerFileRotating>( app::getAppPath() / "logs", "cinder.%Y.%m.%d.log", true, []( const fs::path& path ) {
+		ci::limitDirectoryFileCount( path.parent_path(), 10 );
+	});
+
+	time.start();
+
 	render(";)");
 }
 
@@ -24,11 +30,21 @@ void Improv::render(string text) {
 	mTextTexture = gl::Texture2d::create(mText.render());
 }
 
-void Improv::update() {
-	tonnetz.perlinNoteWalk();
+void Improv::updateNote() {
+	nextNoteChange = tonnetz.perlinNoteWalk();
 	float freq = tonnetz.getFreq();
-	render(to_string(freq));
+	// render(to_string(freq));
 	mGen->setFreq(freq);
+}
+
+void Improv::updateChord() {
+	
+}
+
+void Improv::update() {
+	if (time.getSeconds() > nextNoteChange) {
+		updateNote();
+	}
 }
 
 void Improv::draw()

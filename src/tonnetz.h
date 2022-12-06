@@ -6,6 +6,7 @@
 #include "cinder/audio/Utilities.h"
 #include "cinder/Timer.h"
 #include <math.h>
+#include "cinder/Log.h"
 using namespace glm;
 using namespace ci;
 
@@ -15,17 +16,22 @@ struct Triad {
 
 class Tonnetz {
 	private:
-		const uvec2 i = uvec2(1, 0);
-		const uvec2 j = uvec2(0, 1);
+		const ivec2 i = ivec2(1, 0);
+		const ivec2 j = ivec2(0, 1);
 		Perlin perlin;
 		Rand rand;
 		Timer time;
+		int steps = 0;
+
+		void cleanPosition();
 		
 	public:
-		uvec2 pos = uvec2(0, 0);
+		ivec2 pos = ivec2(0, 0);
 		Tonnetz(uint32_t seed = 1);
-		void classicalNoteWalk();
-		void perlinNoteWalk();
+		float duration();
+
+		float classicalNoteWalk();
+		float perlinNoteWalk();
 
 		void gaussianNoteWalk(Triad* triad);
 		void perlinGaussianNoteWalk(Triad* triad);

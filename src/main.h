@@ -6,7 +6,10 @@
 #include "cinder/audio/Context.h"
 #include "cinder/audio/GenNode.h"
 #include "cinder/audio/GainNode.h"
+
 #include "cinder/Text.h"
+#include "cinder/Log.h"
+#include "cinder/Utilities.h"
 
 #include "tonnetz.h"
 #include <string>
@@ -22,10 +25,16 @@ class Improv : public App {
 	void update() override;
 	void render(string text);
 
+	void updateNote();
+	void updateChord();
+
 	audio::GenNodeRef	mGen;
 	audio::GainNodeRef	mGain;
 
+	Timer time;
+	float nextNoteChange = 1;
+	float nextChordChange = 1;
 	TextBox mText;
 	gl::TextureRef mTextTexture;
-	Tonnetz tonnetz;
+	Tonnetz tonnetz{123};
 };

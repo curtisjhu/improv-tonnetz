@@ -4,35 +4,44 @@ Tonnetz::Tonnetz(uint32_t seed) {
 	rand.seed(seed);
 	perlin.setSeed(seed);
 	perlin.setOctaves(4);
-	time.start();
+	time.start(1);
 }
 
-void Tonnetz::classicalNoteWalk() {
+float Tonnetz::classicalNoteWalk() {
 	switch (rand.randUint(4)) {
 		case 0: pos += i;
 		case 1: pos -= i;
 		case 2: pos += j;
 		case 3: pos -= j;
 	}
-	pos.y %= 3;
-	pos.x %= 12;
+	cleanPosition();
+	return 1;
 }
 
-void Tonnetz::perlinNoteWalk() {
-	float t = (float) time.getSeconds();
-	int8_t x = (int8_t) round(perlin.noise(t));
-	int8_t y = (int8_t) round(perlin.noise(t));
-	pos += i * uvec2(x, x) + j * uvec2(y, y);
+float Tonnetz::perlinNoteWalk() {
+	double t = time.getSeconds();
+	int x = static_cast<int>(round(perlin.noise(t) * 10));
+	int y =  static_cast<int>(round(perlin.noise(t) * 10));
+	pos += i * x + j * y;
+	cleanPosition();
+
+	steps++;
+	return perlin.noise(steps) * 10;
 }
 
 void Tonnetz::classicalChordWalk() {
-
+	
 }
 
 float Tonnetz::getFreq() {
-	int midi = ((pos.x % 12) * 7) % 12 + (pos.y % 3) * 3;
+	cleanPosition();
+	int midi = (pos.x * 7) % 12 + (pos.y * 3);
 	midi = 48 + (midi % 12);
 
 	return audio::midiToFreq((float) midi);
 }
 
+void Tonnetz::cleanPosition() {
+	pos.y %= 3;
+	pos.x %= 12;
+}
