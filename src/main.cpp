@@ -7,7 +7,7 @@ void Improv::setup()
 	mGen = ctx->makeNode( new audio::GenSineNode );
 	mGain = ctx->makeNode( new audio::GainNode );
 
-	mGen->setFreq( 130.8 );
+	mGen->setFreq( 440 );
 	mGain->setValue( 0.5f );
 
 	mGen >> mGain >> ctx->getOutput();
@@ -20,7 +20,7 @@ void Improv::setup()
 
 	time.start();
 
-	render(";)");
+	render("uhhhh");
 }
 
 void Improv::render(string text) {
@@ -31,7 +31,7 @@ void Improv::render(string text) {
 }
 
 void Improv::updateNote() {
-	nextNoteChange = tonnetz.perlinNoteWalk();
+	tonnetz.classicalNoteWalk();
 	float freq = tonnetz.getFreq();
 	// render(to_string(freq));
 	mGen->setFreq(freq);
@@ -42,7 +42,9 @@ void Improv::updateChord() {
 }
 
 void Improv::update() {
-	if (time.getSeconds() > nextNoteChange) {
+	float currentTime = time.getSeconds();
+	if (currentTime - lastNoteTime > 1) {
+		lastNoteTime = currentTime;
 		updateNote();
 	}
 }

@@ -32,8 +32,10 @@ class Improv : public App {
 	audio::GainNodeRef	mGain;
 
 	Timer time;
-	float nextNoteChange = 1;
-	float nextChordChange = 1;
+	float lastNoteTime = 0;
+	float noteDuration = 1;
+	float lastChordTime = 0;
+	float chordDuration = 1;
 	TextBox mText;
 	gl::TextureRef mTextTexture;
 	Tonnetz tonnetz{123};

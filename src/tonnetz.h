@@ -36,7 +36,7 @@ class Tonnetz {
 		void gaussianNoteWalk(Triad* triad);
 		void perlinGaussianNoteWalk(Triad* triad);
 
-		void classicalChordWalk();
-		void perlinChordWalk();
+		float classicalChordWalk();
+		float perlinChordWalk();
 		float getFreq();
 };
