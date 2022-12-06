@@ -2,5 +2,7 @@ builddir
 CMakeFiles
 CMakeCache.txt
 *.cmake
-sound.wav
 Debug
+_deps
+lib
+.vscode

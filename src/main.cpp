@@ -1,66 +1,43 @@
+#include "main.h"
 
-
-#include "cinder/app/App.h"
-#include "cinder/app/RendererGl.h"
-#include "cinder/gl/gl.h"
-
-#include "cinder/audio/Voice.h"
-#include "cinder/audio/Source.h"
-
-#include "Resources.h"
-
-using namespace ci;
-using namespace ci::app;
-
-class VoiceBasicApp : public App {
-public:
-	void setup() override;
-	void mouseDown( MouseEvent event ) override;
-	void keyDown( KeyEvent event ) override;
-	void draw() override;
-
-	audio::VoiceRef mVoice;
-};
-
-void VoiceBasicApp::setup()
+void Improv::setup()
 {
-	mVoice = audio::Voice::create( audio::load( loadResource( RES_DRAIN_OGG ) ) );
+	auto ctx = audio::master();
+
+	mGen = ctx->makeNode( new audio::GenSineNode );
+	mGain = ctx->makeNode( new audio::GainNode );
+
+	mGen->setFreq( 130.8 );
+	mGain->setValue( 0.5f );
+
+	mGen >> mGain >> ctx->getOutput();
+	mGen->enable();
+	ctx->enable();
+
+	render(";)");
 }
 
-void VoiceBasicApp::mouseDown( MouseEvent event )
-{
-	// scale volume and pan from window coordinates to 0:1
-	float volume = 1.0f - (float)event.getPos().y / (float)getWindowHeight();
-	float pan = (float)event.getPos().x / (float)getWindowWidth();
-
-	mVoice->setVolume( volume );
-	mVoice->setPan( pan );
-
-	// By stopping the Voice first if it is already playing, start will play from the beginning
-	if( mVoice->isPlaying() )
-		mVoice->stop();
-
-	mVoice->start();
+void Improv::render(string text) {
+	mText = TextBox().text(text).font(Font( "Times New Roman", 24 )).size(vec2( 100, 100 ));
+	mText.setBackgroundColor(Color(1, 1, 1));
+	mText.setColor(Color(0, 0, 0));
+	mTextTexture = gl::Texture2d::create(mText.render());
 }
 
-void VoiceBasicApp::keyDown( KeyEvent event )
-{
-	// space toggles the voice between playing and pausing
-	if( event.getCode() == KeyEvent::KEY_SPACE ) {
-		if( mVoice->isPlaying() )
-			mVoice->pause();
-		else
-			mVoice->start();
-	}
+void Improv::update() {
+	tonnetz.perlinNoteWalk();
+	float freq = tonnetz.getFreq();
+	render(to_string(freq));
+	mGen->setFreq(freq);
 }
 
-void VoiceBasicApp::draw()
+void Improv::draw()
 {
-	gl::clear( Color( 0, 0, 0.2f ) );
+	gl::clear( Color( 1, 1, 1 ) );
+	if (mTextTexture)
+		gl::draw(mTextTexture);
 }
 
-void preload(App::Settings *settings) {
+CINDER_APP( Improv, RendererGl, []( App::Settings *settings ) {
 	settings->setMultiTouchEnabled( false );
-}
-
-CINDER_APP( VoiceBasicApp, RendererGl, preload)
+} )
