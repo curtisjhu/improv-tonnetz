@@ -32,18 +32,22 @@ float Tonnetz::classicalChordWalk() {
 
 float Tonnetz::perlinNoteWalk() {
 	double t = time.getSeconds();
-	int x = static_cast<int>(round(perlin.noise(steps) * 10));
-	int y =  static_cast<int>(round(perlin.noise(steps + 1000) * 10));
-	pos += i * x + j * y;
+	int x = static_cast<int>(round(perlin.noise(step) * 10));
+	int y =  static_cast<int>(round(perlin.noise(step + 100) * 10));
+	pos += i * x;
+	pos += j * y;
 	cleanPosition();
-	steps++;
-	return perlin.noise(steps) * 20;
+
+	step += 0.1;
+	float duration = abs(perlin.noise(step)) * 4;
+	CI_LOG_D(duration);
+	duration = 0.5 + round(duration * 2) / 2;
+	return duration;
 }
 
 float Tonnetz::perlinChordWalk() {
-
+	perlin.noise(chordPos);
 }
-
 
 float Tonnetz::getFreq() {
 	cleanPosition();

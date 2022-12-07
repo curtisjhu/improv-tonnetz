@@ -21,20 +21,16 @@ class Tonnetz {
 		Perlin perlin;
 		Rand rand;
 		Timer time;
-		int steps = 0;
-
+		float step = 1.5f;
 		void cleanPosition();
 		
 	public:
 		ivec2 pos = ivec2(0, 0);
+		ivec2 chordPos = ivec2(0, 0);
 		Tonnetz(uint32_t seed = 1);
-		float duration();
 
 		float classicalNoteWalk();
 		float perlinNoteWalk();
-
-		void gaussianNoteWalk(Triad* triad);
-		void perlinGaussianNoteWalk(Triad* triad);
 
 		float classicalChordWalk();
 		float perlinChordWalk();

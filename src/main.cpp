@@ -24,26 +24,22 @@ void Improv::setup()
 }
 
 void Improv::render(string text) {
-	mText = TextBox().text(text).font(Font( "Times New Roman", 24 )).size(vec2( 100, 100 ));
+	mText = TextBox().text(text).font(Font( "Times New Roman", 24 )).size(vec2( 200, 100 ));
 	mText.setBackgroundColor(Color(1, 1, 1));
 	mText.setColor(Color(0, 0, 0));
 	mTextTexture = gl::Texture2d::create(mText.render());
 }
 
 void Improv::updateNote() {
-	tonnetz.classicalNoteWalk();
+	noteDuration = tonnetz.perlinNoteWalk();
 	float freq = tonnetz.getFreq();
-	// render(to_string(freq));
+	render(to_string(freq));
 	mGen->setFreq(freq);
-}
-
-void Improv::updateChord() {
-	
 }
 
 void Improv::update() {
 	float currentTime = time.getSeconds();
-	if (currentTime - lastNoteTime > 1) {
+	if (currentTime - lastNoteTime > noteDuration) {
 		lastNoteTime = currentTime;
 		updateNote();
 	}

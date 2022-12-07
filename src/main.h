@@ -33,7 +33,7 @@ class Improv : public App {
 
 	Timer time;
 	float lastNoteTime = 0;
-	float noteDuration = 1;
+	float noteDuration = 0.5;
 	float lastChordTime = 0;
 	float chordDuration = 1;
 	TextBox mText;
