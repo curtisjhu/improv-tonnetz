@@ -1,38 +1,33 @@
 #pragma once
+#include "PerlinNoise.hpp"
 #include "glm/glm.hpp"
-#include "glm/gtc/random.hpp"
-#include "cinder/Perlin.h"
-#include "cinder/Rand.h"
-#include "cinder/audio/Utilities.h"
-#include "cinder/Timer.h"
 #include <math.h>
-#include "cinder/Log.h"
+#include <utility>
+#include <random>
 using namespace glm;
-using namespace ci;
+using namespace std;
 
 struct Triad {
-	uint8_t midi1, midi2, midi3;
+	ivec2 one, three, five;
+	float oneFreq, threeFreq, fiveFreq;
 };
 
 class Tonnetz {
 	private:
 		const ivec2 i = ivec2(1, 0);
 		const ivec2 j = ivec2(0, 1);
-		Perlin perlin;
-		Rand rand;
-		Timer time;
 		float step = 1.5f;
-		void cleanPosition();
+		void cleanPosition(ivec2 &p);
 		
 	public:
 		ivec2 pos = ivec2(0, 0);
-		ivec2 chordPos = ivec2(0, 0);
+		Triad chord;
 		Tonnetz(uint32_t seed = 1);
 
-		float classicalNoteWalk();
-		float perlinNoteWalk();
+		tuple<float, float, float> classicalNoteWalk();
+		tuple<float, float, float> perlinNoteWalk();
 
-		float classicalChordWalk();
-		float perlinChordWalk();
-		float getFreq();
+		tuple<float, Triad, float>  classicalChordWalk();
+		tuple<float, Triad, float>  perlinChordWalk();
+		uint8_t getMidi(ivec2 &p);
 };

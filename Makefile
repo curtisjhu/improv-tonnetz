@@ -168,21 +168,22 @@ preinstall/fast:
 
 # clear depends
 depend:
+	$(CMAKE_COMMAND) -P /Users/curtisjhu/cpp/improv-tonnetz/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ImprovTonnetz
+# Target rules for targets named improv
 
 # Build rule for target.
-ImprovTonnetz: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ImprovTonnetz
-.PHONY : ImprovTonnetz
+improv: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 improv
+.PHONY : improv
 
 # fast build rule for target.
-ImprovTonnetz/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/build
-.PHONY : ImprovTonnetz/fast
+improv/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/improv.dir/build.make CMakeFiles/improv.dir/build
+.PHONY : improv/fast
 
 #=============================================================================
 # Target rules for targets named tests
@@ -249,25 +250,12 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-#=============================================================================
-# Target rules for targets named cinder
-
-# Build rule for target.
-cinder: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cinder
-.PHONY : cinder
-
-# fast build rule for target.
-cinder/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/cinder-build/CMakeFiles/cinder.dir/build.make _deps/cinder-build/CMakeFiles/cinder.dir/build
-.PHONY : cinder/fast
-
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/improv.dir/build.make CMakeFiles/improv.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -275,7 +263,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/improv.dir/build.make CMakeFiles/improv.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -283,7 +271,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/improv.dir/build.make CMakeFiles/improv.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 src/tonnetz.o: src/tonnetz.cpp.o
@@ -291,7 +279,7 @@ src/tonnetz.o: src/tonnetz.cpp.o
 
 # target to build an object file
 src/tonnetz.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/tonnetz.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/improv.dir/build.make CMakeFiles/improv.dir/src/tonnetz.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/src/tonnetz.cpp.o
 .PHONY : src/tonnetz.cpp.o
 
@@ -300,7 +288,7 @@ src/tonnetz.i: src/tonnetz.cpp.i
 
 # target to preprocess a source file
 src/tonnetz.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/tonnetz.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/improv.dir/build.make CMakeFiles/improv.dir/src/tonnetz.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/src/tonnetz.cpp.i
 .PHONY : src/tonnetz.cpp.i
 
@@ -309,7 +297,7 @@ src/tonnetz.s: src/tonnetz.cpp.s
 
 # target to generate assembly for a file
 src/tonnetz.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ImprovTonnetz.dir/build.make CMakeFiles/ImprovTonnetz.dir/src/tonnetz.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/improv.dir/build.make CMakeFiles/improv.dir/src/tonnetz.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/src/tonnetz.cpp.s
 .PHONY : src/tonnetz.cpp.s
 
@@ -350,12 +338,11 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... ImprovTonnetz"
-	@echo "... cinder"
 	@echo "... gmock"
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... improv"
 	@echo "... tests"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
@@ -377,6 +364,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
+	$(CMAKE_COMMAND) -P /Users/curtisjhu/cpp/improv-tonnetz/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

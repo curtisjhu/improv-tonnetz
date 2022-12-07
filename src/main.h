@@ -1,22 +1,19 @@
 #pragma once
-#include "cinder/app/App.h"
-#include "cinder/app/RendererGl.h"
-#include "cinder/gl/gl.h"
-
-#include "cinder/audio/Context.h"
-#include "cinder/audio/GenNode.h"
-#include "cinder/audio/GainNode.h"
-
-#include "cinder/Text.h"
-#include "cinder/Log.h"
-#include "cinder/Utilities.h"
-
+#include "juce_core/juce_core.h"
 #include "tonnetz.h"
 #include <string>
 
-using namespace ci;
-using namespace ci::app;
 using namespace std;
+
+struct Chord {
+	audio::GenNodeRef one, three, five;
+	audio::GainNodeRef gain;
+};
+
+struct Note {
+	audio::GenNodeRef wave;
+	audio::GainNodeRef gain;
+};
 
 class Improv : public App {
   public:
@@ -28,15 +25,16 @@ class Improv : public App {
 	void updateNote();
 	void updateChord();
 
-	audio::GenNodeRef	mGen;
-	audio::GainNodeRef	mGain;
+	Note note;
+	Chord chord;
 
 	Timer time;
 	float lastNoteTime = 0;
 	float noteDuration = 0.5;
 	float lastChordTime = 0;
 	float chordDuration = 1;
+	
 	TextBox mText;
 	gl::TextureRef mTextTexture;
-	Tonnetz tonnetz{123};
+	Tonnetz tonnetz{};
 };
