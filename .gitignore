@@ -1,8 +1,1 @@
-builddir
-CMakeFiles
-CMakeCache.txt
-*.cmake
-Debug
-_deps
-lib
-.vscode
+build
