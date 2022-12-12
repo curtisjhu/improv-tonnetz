@@ -4,8 +4,8 @@ class ImprovTonnetzApplication  : public juce::JUCEApplication {
 	public:
 		ImprovTonnetzApplication() {}
 
-		const juce::String getApplicationName() override       { return ProjectInfo::projectName; }
-		const juce::String getApplicationVersion() override    { return ProjectInfo::versionString; }
+		const juce::String getApplicationName() override       { return juce::String("ImprovTonnetz"); }
+		const juce::String getApplicationVersion() override    { return juce::String("0.1.1"); }
 		bool moreThanOneInstanceAllowed() override             { return true; }
 		void initialise (const juce::String& commandLine) override {
 			mainWindow.reset (new MainWindow (getApplicationName()));
@@ -30,7 +30,7 @@ class ImprovTonnetzApplication  : public juce::JUCEApplication {
 									DocumentWindow::allButtons)
 				{
 					setUsingNativeTitleBar (true);
-					setContentOwned (new ImprovTonnetz(), true);
+					setContentOwned (new MainContentComponent(), true);
 
 				#if JUCE_IOS || JUCE_ANDROID
 					setFullScreen (true);

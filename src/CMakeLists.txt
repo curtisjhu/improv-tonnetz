@@ -3,6 +3,7 @@ project(ImprovTonnetz)
 juce_add_gui_app(
 	${PROJECT_NAME}
 	PRODUCT_NAME ${PROJECT_NAME}
+	COMPANY_NAME "curtisjhu"
 	VERSION 0.1.1
 )
 juce_generate_juce_header(${PROJECT_NAME})
@@ -26,5 +27,6 @@ target_link_libraries(
 	juce::juce_gui_basics
 	juce::juce_audio_utils
 	juce::juce_core
+	juce::juce_audio_basics
+	juce::juce_events
 )
-

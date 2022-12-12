@@ -1,26 +1,24 @@
 #include "main.h"
 
-ImprovTonnetz::ImprovTonnetz()
+void MainContentComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
+{ synthAudioSource.prepareToPlay(samplesPerBlockExpected, sampleRate); }
+
+void MainContentComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
+{ synthAudioSource.getNextAudioBlock(bufferToFill); }
+
+void MainContentComponent::releaseResources()
+{ synthAudioSource.releaseResources(); }
+
+void MainContentComponent::timerCallback()
 {
-	setSize(800, 600);
-	setAudioChannels(0, 2);
+	keyboardComponent.grabKeyboardFocus();
+	stopTimer();
 }
 
-ImprovTonnetz::~ImprovTonnetz()
-{ shutdownAudio(); }
+void MainContentComponent::paint(juce::Graphics& g)
+{ }
 
-
-void ImprovTonnetz::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
-{}
-
-void ImprovTonnetz::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
-{}
-
-void ImprovTonnetz::releaseResources()
-{}
-
-void ImprovTonnetz::paint(juce::Graphics& g)
-{}
-
-void ImprovTonnetz::resized()
-{}
+void MainContentComponent::resized()
+{
+	keyboardComponent.setBounds (8, 96, getWidth() - 16, 64);
+}

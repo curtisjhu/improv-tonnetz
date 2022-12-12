@@ -3,8 +3,9 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/build/_deps/**",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/build/_deps/juce-src/modules",
+                "${workspaceFolder}/src/"
+
             ],
             "defines": [],
             "macFrameworkPath": [

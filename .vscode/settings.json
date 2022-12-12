@@ -3,5 +3,6 @@
 		"random": "cpp",
 		"tuple": "cpp",
 		"*.o": "cpp"
-	}
+	},
+	"C_Cpp.intelliSenseEngineFallback": "enabled"
 }
