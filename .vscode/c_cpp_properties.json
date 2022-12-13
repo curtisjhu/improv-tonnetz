@@ -4,8 +4,10 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/build/_deps/juce-src/modules",
-                "${workspaceFolder}/src/"
-
+                "${workspaceFolder}/build/_deps/glm-src/",
+                "${workspaceFolder}/build/_deps/googletest-src/",
+                "${workspaceFolder}/src/",
+                "${workspaceFolder}/include/"
             ],
             "defines": [],
             "macFrameworkPath": [

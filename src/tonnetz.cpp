@@ -1,88 +1,107 @@
 #include "tonnetz.h"
 
-// Tonnetz::Tonnetz(uint32_t seed) {
-// 	gen.seed(seed);
-// 	perlin.reseed(seed);
+Tonnetz::Tonnetz()
+{ Tonnetz(1966); }
 
-// 	note = ivec2(0, 0);
-// 	chord.one = ivec2(0, 0);
-// 	chord.five = ivec2(1, 0);
-// 	chord.three = ivec2(0, 1);
-// }
+Tonnetz::Tonnetz(uint32_t seed)
+{
+	random.setSeed(seed);
+	perlin.reseed(seed);
 
-// tuple<float, float, float> Tonnetz::classicalNoteWalk() {
-// 	switch (gen() % 4) {
-// 		case 0: note += i; break;
-// 		case 1: note -= i; break;
-// 		case 2: note += j; break;
-// 		case 3: note -= j; break;
-// 	}
-// 	cleanPosition(note);
+	note = ivec2(0, 0);
+	chord.one = ivec2(0, 0);
+	chord.five = ivec2(1, 0);
+	chord.three = ivec2(0, 1);
+}
 
-// 	float interval = 1;
-// 	return make_tuple(interval, getMidi(note), 0.3);
-// }
+Note Tonnetz::classicalNoteWalk() {
+	switch (random.nextInt(4)) {
+		case 0: note += i; break;
+		case 1: note -= i; break;
+		case 2: note += j; break;
+		case 3: note -= j; break;
+	}
+	cleanPosition(note);
 
-// tuple<float, Triad, float> Tonnetz::classicalChordWalk() {
-// 	auto pivot = [this](ivec2 &pivot, ivec2 &third, ivec2 &fifth){
-// 		switch(rand.randUint(6)) {
-// 			case 0: third = pivot + i; fifth = third - j; break;
-// 			case 1: third = pivot - i; fifth = third + j; break;
-// 			case 2: third = pivot + j; fifth = pivot + i; break;
-// 			case 3: third = pivot - j; fifth = pivot - i; break;
-// 			case 4: third = pivot - i + j; fifth = pivot + j; break;
-// 			case 5: third = pivot + i - j; fifth = pivot - j; break;
-// 		}
-// 	};
+	Note n;
+	n.duration = 1;
+	n.note = getMidi(note);
+	n.velocity = 120;
+	return n;
+}
 
-// 	switch (rand.randUint(3)) {
-// 		case 0:
-// 			pivot(chord.one, chord.three, chord.five);
-// 			break;
-// 		case 1:
-// 			pivot(chord.three, chord.one, chord.five);
-// 			break;
-// 		case 2:
-// 			pivot(chord.five, chord.one, chord.three);
-// 			break;
-// 	}
-// 	cleanPosition(chord.one);
-// 	cleanPosition(chord.three);
-// 	cleanPosition(chord.five);
+Chord Tonnetz::classicalChordWalk()
+{
+	auto pivot = [this](ivec2 &pivot, ivec2 &third, ivec2 &fifth){
+		switch(random.nextInt(6)) {
+			case 0: third = pivot + i; fifth = third - j; break;
+			case 1: third = pivot - i; fifth = third + j; break;
+			case 2: third = pivot + j; fifth = pivot + i; break;
+			case 3: third = pivot - j; fifth = pivot - i; break;
+			case 4: third = pivot - i + j; fifth = pivot + j; break;
+			case 5: third = pivot + i - j; fifth = pivot - j; break;
+		}
+	};
 
-// 	float interval = 2;
-// 	float gain = 0.3;
-// 	chord.oneFreq = getFreq(chord.one);
-// 	chord.threeFreq = getFreq(chord.three);
-// 	chord.fiveFreq = getFreq(chord.five);
+	switch (random.nextInt(3)) {
+		case 0:
+			pivot(chord.one, chord.three, chord.five);
+			break;
+		case 1:
+			pivot(chord.three, chord.one, chord.five);
+			break;
+		case 2:
+			pivot(chord.five, chord.one, chord.three);
+			break;
+	}
+	cleanPosition(chord.one);
+	cleanPosition(chord.three);
+	cleanPosition(chord.five);
 
-// 	return make_tuple(interval, chord, gain);
-// }
+	Triad c;
+	c.oneMidi = getMidi(chord.one);
+	c.fiveMidi = getMidi(chord.five);
+	c.threeMidi = getMidi(chord.three);
 
-// tuple<float, float, float> Tonnetz::perlinNoteWalk() {
-// 	int x = static_cast<int>(round(perlin.noise(step) * 10));
-// 	int y =  static_cast<int>(round(perlin.noise(step + 100) * 10));
-// 	note += i * x;
-// 	note += j * y;
-// 	cleanPosition(note);
+	Chord ch;
+	ch.chord = c;
+	ch.duration = 2;
+	ch.velocity = 0.3;
+	return ch;
+}
 
-// 	float gain = abs(perlin.noise(step + 1000) * (0.8 - 0.2) + 0.2);
+Note Tonnetz::perlinNoteWalk()
+{
+	int x = static_cast<int>(round(perlin.octave1D_11(step, octaves) * 10));
+	int y =  static_cast<int>(round(perlin.octave1D_11(step + 100, octaves) * 10));
+	note += i * x;
+	note += j * y;
+	cleanPosition(note);
 
-// 	step += 0.1;
-// 	float duration = abs(perlin.noise(step)) * 4;
-// 	duration = 0.5 + round(duration * 2) / 2;
+	float gain = abs(perlin.octave1D_01(step + 1000, octaves) * (0.8 - 0.2) + 0.2);
 
-// 	return make_tuple(duration, getFreq(note), gain);
-// }
+	step += 0.1;
+	float duration = abs(perlin.octave1D_01(step, octaves)) * 4;
+	duration = 0.5 + round(duration * 2) / 2;
 
-// uint8_t Tonnetz::getMidi(ivec2 &p) {
-// 	cleanPosition(p);
-// 	int midi = (p.x * 7) % 12 + (p.y * 3);
-// 	midi = 60 + (midi % 12);
-// 	return midi;
-// }
+	Note n;
+	n.duration = duration;
+	n.note = getMidi(note);
+	n.velocity = gain;
+	return n;
+}
 
-// void Tonnetz::cleanPosition(ivec2 &p) {
-// 	p.y = (p.y < 0) ? 3 + (p.y % 3) : p.y % 3;
-// 	p.x = (p.x < 0) ? 12 + (p.x % 12) : p.x % 12;
-// }
+uint8_t Tonnetz::getMidi(ivec2 &p)
+{
+	int baseNote = 60;
+	cleanPosition(p);
+	int midi = (p.x * 7) % 12 + (p.y * 3);
+	midi = baseNote + (midi % 12);
+	return midi;
+}
+
+void Tonnetz::cleanPosition(ivec2 &p)
+{
+	p.y = (p.y < 0) ? 3 + (p.y % 3) : p.y % 3;
+	p.x = (p.x < 0) ? 12 + (p.x % 12) : p.x % 12;
+}

@@ -11,8 +11,10 @@ void MainContentComponent::releaseResources()
 
 void MainContentComponent::timerCallback()
 {
-	keyboardComponent.grabKeyboardFocus();
-	stopTimer();
+	// keyboardComponent.grabKeyboardFocus();
+	Note n = tonnetz.classicalNoteWalk();
+	synthAudioSource.playMidi(n, 1);
+	// stopTimer();
 }
 
 void MainContentComponent::paint(juce::Graphics& g)

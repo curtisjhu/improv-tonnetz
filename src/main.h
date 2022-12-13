@@ -5,6 +5,8 @@
 #include <juce_events/juce_events.h>
 #include <juce_audio_basics/juce_audio_basics.h>
 #include "synth.h"
+#include "tonnetz.h"
+#include "types.h"
 
 using namespace std;
 
@@ -18,7 +20,7 @@ public:
 	{
 		addAndMakeVisible (keyboardComponent);
         setAudioChannels (0, 2);
- 
+		
         setSize (600, 160);
 		startTimer(400);
 	};
@@ -39,6 +41,8 @@ private:
 	juce::MidiKeyboardState keyboardState;
 	juce::MidiKeyboardComponent keyboardComponent;
 	SynthAudioSource synthAudioSource;
+	Tonnetz tonnetz;
+	juce::TextButton playbackButton;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };

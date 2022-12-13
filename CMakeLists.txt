@@ -8,13 +8,13 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(cmake/CPM.cmake)
 find_package(juce REQUIRED)
+find_package(glm REQUIRED)
 
 add_subdirectory(src)
 
+option(BUILD_UNIT_TESTS "Build JUCE prototype examples" ON)
 
-# option(BUILD_UNIT_TESTS "Build JUCE prototype examples" OFF)
-
-# if (BUILD_UNIT_TESTS)
-#     enable_testing()
-#     add_subdirectory(Tests)
-# endif()
+if (BUILD_UNIT_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
