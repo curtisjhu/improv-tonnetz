@@ -14,6 +14,6 @@ struct Chord {
 
 struct Note {
 	float duration;
-	uint8_t note;
+	int note;
 	float velocity;
 };

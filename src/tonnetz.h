@@ -1,9 +1,12 @@
 #pragma once
+#define GLM_FORCE_MESSAGES
 #include <math.h>
 #include <utility>
 #include <glm/glm.hpp>
 #include "types.h"
 #include <juce_core/juce_core.h>
+#include <juce_audio_basics/juce_audio_basics.h>
+#include <juce_events/juce_events.h>
 #include "PerlinNoise.hpp"
 using namespace glm;
 using namespace std;
@@ -18,19 +21,32 @@ private:
 	void cleanPosition(ivec2 &p);
 	juce::Random random;
 	siv::PerlinNoise perlin;
+	void addMessageToBuffer (Note note);
+	int channel;
+	juce::MidiBuffer eventsToAdd;
+
+	double lastNoteTime;
+	double lastChordTime;
+	float noteDuration;
+	float chordDuration;
+
+	double startTime;
 	
 public:
 	ivec2 note;
 	struct {
 		ivec2 one, three, five;
 	} chord;
-	Tonnetz();
-	Tonnetz(uint32_t seed);
+	Tonnetz(int channel);
+	Tonnetz(uint32_t seed, int channel);
 
+	void processNextMidiBuffer(juce::MidiBuffer& buffer, const int startSample, const int numSamples);
+	
 	Note classicalNoteWalk();
 	Note perlinNoteWalk();
 
 	Chord  classicalChordWalk();
 	Chord  perlinChordWalk();
 	uint8_t getMidi(ivec2 &p);
+
 };

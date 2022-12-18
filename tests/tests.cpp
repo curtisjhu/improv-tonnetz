@@ -1,12 +1,14 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include "tonnetz.h"
 #include "types.h"
 
-TEST(TonnetzTest, BasicAssertions) {
-	Tonnetz tonn(1234);
+TEST(TonnetzTest, GTEST) {
+	MockTonnetz tonn;
+	EXPECT_CALL(tonn, classicalNoteWalk());
+}
 
-	for (int i = 0; i < 10; i++) {
-		Note n = tonn.classicalNoteWalk();
-		LOG_DEBUG(n.note);
-	}
+class MockTonnetz : public Tonnetz {
+	public:
+		MOCK_METHOD(Note classicalNoteWalk, (), (override));
 }

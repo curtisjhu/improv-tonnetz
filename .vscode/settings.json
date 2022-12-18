@@ -2,7 +2,8 @@
 	"files.associations": {
 		"random": "cpp",
 		"tuple": "cpp",
-		"*.o": "cpp"
+		"*.o": "cpp",
+		"*.mm": "cpp"
 	},
 	"C_Cpp.intelliSenseEngineFallback": "enabled"
 }

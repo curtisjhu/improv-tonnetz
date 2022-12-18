@@ -11,10 +11,8 @@ void MainContentComponent::releaseResources()
 
 void MainContentComponent::timerCallback()
 {
-	// keyboardComponent.grabKeyboardFocus();
-	Note n = tonnetz.classicalNoteWalk();
-	synthAudioSource.playMidi(n, 1);
-	// stopTimer();
+	keyboardComponent.grabKeyboardFocus();
+	stopTimer();
 }
 
 void MainContentComponent::paint(juce::Graphics& g)
@@ -22,5 +20,5 @@ void MainContentComponent::paint(juce::Graphics& g)
 
 void MainContentComponent::resized()
 {
-	keyboardComponent.setBounds (8, 96, getWidth() - 16, 64);
+	keyboardComponent.setBounds (10,  40, getWidth() - 20, getHeight() - 50);	
 }
