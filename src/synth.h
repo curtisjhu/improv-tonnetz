@@ -26,7 +26,6 @@ public:
     void prepareToPlay (int /*samplesPerBlockExpected*/, double sampleRate) override
     {
         synth.setCurrentPlaybackSampleRate (sampleRate);
-        synthSampleRate = sampleRate;
     }
  
     void releaseResources() override {}
@@ -39,7 +38,7 @@ public:
         keyboardState.processNextMidiBuffer(incomingBuffer, bufferToFill.startSample,
                                                  bufferToFill.numSamples, true);
 
-        tonnetz.classicalNoteWalk();
+        tonnetz.perlinNoteWalk();
         tonnetz.processNextMidiBuffer(incomingBuffer, bufferToFill.startSample, bufferToFill.numSamples);
  
         synth.renderNextBlock (*bufferToFill.buffer, incomingBuffer,
@@ -53,5 +52,4 @@ private:
     juce::Synthesiser synth;
     Tonnetz tonnetz;
 
-    double synthSampleRate;
 };

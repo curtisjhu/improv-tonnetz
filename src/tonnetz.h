@@ -16,12 +16,13 @@ class Tonnetz
 private:
 	const ivec2 i = ivec2(1, 0);
 	const ivec2 j = ivec2(0, 1);
-	float step = 1.5f;
 	const int octaves = 4;
 	void cleanPosition(ivec2 &p);
+	void cleanChordPosition();
 	juce::Random random;
 	siv::PerlinNoise perlin;
-	void addMessageToBuffer (Note note);
+	void addMessageToBuffer(Note note, int channel);
+	void addMessageToBuffer (Chord chord);
 	int channel;
 	juce::MidiBuffer eventsToAdd;
 
@@ -41,11 +42,11 @@ public:
 	Tonnetz(uint32_t seed, int channel);
 
 	void processNextMidiBuffer(juce::MidiBuffer& buffer, const int startSample, const int numSamples);
-	
-	Note classicalNoteWalk();
+
+	void classicalNoteWalk();
 	Note perlinNoteWalk();
 
-	Chord  classicalChordWalk();
+	void  classicalChordWalk();
 	Chord  perlinChordWalk();
 	uint8_t getMidi(ivec2 &p);
 
