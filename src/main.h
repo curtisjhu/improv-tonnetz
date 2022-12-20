@@ -21,7 +21,7 @@ public:
 		
         setSize (600, 160);
 		startTimer(400);
-	};
+	}
 
 	~MainContentComponent() override
 	{ shutdownAudio(); }

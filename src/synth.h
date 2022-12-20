@@ -38,7 +38,8 @@ public:
         keyboardState.processNextMidiBuffer(incomingBuffer, bufferToFill.startSample,
                                                  bufferToFill.numSamples, true);
 
-        tonnetz.perlinNoteWalk();
+        tonnetz.tonalCenterNoteWalk();
+        tonnetz.noChordWalk();
         tonnetz.processNextMidiBuffer(incomingBuffer, bufferToFill.startSample, bufferToFill.numSamples);
  
         synth.renderNextBlock (*bufferToFill.buffer, incomingBuffer,

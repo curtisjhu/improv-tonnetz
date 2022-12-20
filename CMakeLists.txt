@@ -11,8 +11,3 @@ include(cmake/CPM.cmake)
 add_subdirectory(src)
 
 option(BUILD_UNIT_TESTS "Build JUCE prototype examples" OFF)
-
-if (BUILD_UNIT_TESTS)
-    # enable_testing()
-    # add_subdirectory(tests)
-endif()
