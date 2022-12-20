@@ -33,4 +33,11 @@ In order to change the type of random walk, change the method under `getNextAudi
 | ----------- | ----------- |
 | `classicalNoteWalk` | A classical walk over the tonnetz. No real sense of music |
 | `perlinNoteWalk` | A perlin walk over the tonnetz.  |
-| `classicalChordWalk` |  |
+| `gaussianNoteWalk` | Picks a random note based off a gaussian distribution where the mean is the chord center |
+| `tonalCenterNoteWalk` | Uses the current chord and finds the scale to riff off of |
+| `classicalChordWalk` | Basic triads that relate to one another via PLR transformations. |
+| `noChordWalk` | Drones over a chord like in sitar music. Change the droning chord in the tonnetz constructor.  |
+
+
+### TODO
+- i want legato...
