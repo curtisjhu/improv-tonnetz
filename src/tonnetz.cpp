@@ -218,7 +218,7 @@ void Tonnetz::gaussianNoteWalk()
 	{
 		lastNoteTime = currentTime;
 
-		moveAccordingToCDF(note);
+		randGaussianPosition(note);
 
 		float velocity = abs(perlin.octave1D_01(step + 1000, octaves) * (0.8 - 0.2) + 0.2);
 
